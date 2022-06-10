@@ -1,12 +1,14 @@
 const Axios = require('axios')
 const express = require('express')
 
-const PORT = 4000
+const PORT = 5000
 
 const app = express()
 
 app.get('/', (req, res) => {
-  res.send(`<h1>TEST</h1>`)
+  res.send(`<center><h1>INI ADALAH HALAMAN DEPAN</h1>
+  <h3>UNTUK DATA API SILAHKAN KE LINK BERIKUT</h3>
+  <a href="http://localhost:${PORT}/api">DATA JSON</a></center>`)
 })
 
 const instance = Axios.create({
@@ -15,7 +17,7 @@ const instance = Axios.create({
   headers: { 'Authorization': 'Bearer ' + 'AAAAAAAAAAAAAAAAAAAAAJUZdgEAAAAAe29LZGf4uPRCONKEMzGYpDiF%2FXw%3DiuWbQpLBBWYEbFHA4lPZH3mYTJxsEgC6WbnD04PBvbLJwjuvGk' }
 });
 
-app.get('/data', (req, res) => {
+app.get('/api', (req, res) => {
   instance.get('/search/recent?query=from:elonmusk&tweet.fields=created_at&expansions=author_id&user.fields=created_at&max_results=100')
     .then(response => {
       res.send(response.data)
@@ -23,4 +25,5 @@ app.get('/data', (req, res) => {
     })
 })
 
-app.listen(PORT, () => console.log(`api jalan di port ${PORT}`))
+const port = process.env.PORT || 5000
+app.listen(port, () => console.log(`api jalan di port ${port}`))
